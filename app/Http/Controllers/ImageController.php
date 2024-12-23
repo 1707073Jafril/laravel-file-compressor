@@ -29,20 +29,18 @@ class ImageController extends Controller
             $manager = new ImageManager(Driver::class);
             $image = $manager->read($path);
             $encoded = $image->toJpeg(quality: 60);
-            $imageName_encoded = time() . '.jpeg'; // You can change the name of the file if needed
-            $destinationPath = public_path('edited_img/' . $imageName_encoded); // Path to save the image in public/edited folder
+            $imageName_encoded = time() . '.jpeg'; 
+            $destinationPath = public_path('edited_img/' . $imageName_encoded);
             $encoded->save($destinationPath);
 
-            // For web response
             return response()->json([
-                'message' => 'Image uploaded successfully!',
-                'image_url' => $path, // URL to access the uploaded image
-                'image_name' => $imageName, // Optionally return the image file name
+                'message' => 'Image uploaded & Compressed successfully!',
+                'original_image_url' => $path, 
+                'edited_image_url' => $destinationPath, 
             ], 200);
         } else {
-            // Return error response if the image wasn't uploaded or is invalid
             return response()->json([
-                'error' => 'Failed to upload the image. Please try again.',
+                'error' => 'Failed to upload or decode the image. Please try again.',
             ], 400);
         }
 
@@ -51,7 +49,7 @@ class ImageController extends Controller
 
     public function processVideo(Request $request): JsonResponse 
     {
-        
+
     }
     
 }
