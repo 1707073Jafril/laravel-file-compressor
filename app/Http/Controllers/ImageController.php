@@ -26,6 +26,8 @@ class ImageController extends Controller
             $imageName = time() . '.' . $image->extension();
             $image->move($uploadPath, $imageName);
             $path = public_path('uploaded_img/' . $imageName);
+
+            //Applying compressing using image file path
             $manager = new ImageManager(Driver::class);
             $image = $manager->read($path);
             $encoded = $image->toJpeg(quality: 60);
@@ -49,6 +51,14 @@ class ImageController extends Controller
 
     public function processVideo(Request $request): JsonResponse 
     {
+        $uploadPath = public_path('uploaded_vids');
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true); 
+        }
+        if (!file_exists(public_path('edited_vids'))) {
+            mkdir(public_path('edited_vids'), 0777, true);
+        }
+
 
     }
     
