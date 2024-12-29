@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\MediaType;
 use Intervention\Image\Facades\Image;
+use FFMpeg;
+use FFMpeg\Coordinate\Dimension;
+use FFMpeg\Format\Video\X264;
 
 class ImageController extends Controller
 {
@@ -45,20 +48,6 @@ class ImageController extends Controller
                 'error' => 'Failed to upload or decode the image. Please try again.',
             ], 400);
         }
-
-    }
-
-
-    public function processVideo(Request $request): JsonResponse 
-    {
-        $uploadPath = public_path('uploaded_vids');
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true); 
-        }
-        if (!file_exists(public_path('edited_vids'))) {
-            mkdir(public_path('edited_vids'), 0777, true);
-        }
-
 
     }
     
